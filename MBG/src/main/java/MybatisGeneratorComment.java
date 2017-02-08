@@ -6,18 +6,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 
 import java.util.Properties;
 
-/**
- * @author zhouzm5
- * @version v1.0.0
- * @Copyright Copyright (c) 2017 AsiaInfo
- * @ClassName
- * @Description
- * @date 2017/2/8 <br>
- * Modification History:<br>
- * Date Author Version Description<br>
- * ---------------------------------------------------------*<br>
- * 2017/2/8 zhouzm5 v1.0.0 <br>
- */
+
 public class MybatisGeneratorComment implements CommentGenerator {
 
     @Override
