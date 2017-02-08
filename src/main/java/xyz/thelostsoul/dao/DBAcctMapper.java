@@ -1,14 +1,10 @@
 package xyz.thelostsoul.dao;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import xyz.thelostsoul.bean.DBAcct;
-import xyz.thelostsoul.bean.DBAcctExample;
 
 public interface DBAcctMapper {
-    long countByExample(DBAcctExample example);
-
-    int deleteByExample(DBAcctExample example);
 
     int deleteByPrimaryKey(String dbAcctCode);
 
@@ -16,13 +12,8 @@ public interface DBAcctMapper {
 
     int insertSelective(DBAcct record);
 
-    List<DBAcct> selectByExample(DBAcctExample example);
-
-    DBAcct selectByPrimaryKey(String dbAcctCode);
-
-    int updateByExampleSelective(@Param("record") DBAcct record, @Param("example") DBAcctExample example);
-
-    int updateByExample(@Param("record") DBAcct record, @Param("example") DBAcctExample example);
+    @Select("select * from base.cfg_db_acct where db_acct_code=#{dbAcctCode}")
+    DBAcct selectByPrimaryKey(@Param("dbAcctCode") String dbAcctCode);
 
     int updateByPrimaryKeySelective(DBAcct record);
 
