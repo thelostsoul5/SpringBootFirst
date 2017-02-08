@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+    <script src="js/vue.js"></script>
+    <script src="js/jquery.js"></script>
+</head>
+<body>
+<div id="text">
+    {{message}}
+</div>
+</body>
+<script>
+    new Vue({
+        el:'#text',
+        data:{
+            message: 'Hello'
+        },
+        created: function(){
+            var self = this;
+            $.get('/greeting',function (d, s) {
+                self.message = d.content;
+            });
+        }
+    });
+</script>
+</html>
