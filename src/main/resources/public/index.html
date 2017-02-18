@@ -17,7 +17,7 @@
         data:{
             message: 'Hello'
         },
-        created: function(){
+        beforeCreate: function(){
             var self = this;
             $.get('/greeting',function (d, s) {
                 self.message = d.content;
