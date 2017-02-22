@@ -3,7 +3,7 @@ package xyz.thelostsoul.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.thelostsoul.bean.User;
-import xyz.thelostsoul.service.impl.UserServiceImpl;
+import xyz.thelostsoul.service.inter.IUserService;
 
 import java.util.List;
 
@@ -14,21 +14,21 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserServiceImpl userServiceImpl;
+    private IUserService userService;
 
     @RequestMapping(value="/user/{id}", method= RequestMethod.GET)
     public User queryUserMessage(@PathVariable int id){
-        return userServiceImpl.getUserById(id);
+        return userService.getUserById(id);
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public List<User> allUsers(){
-        return userServiceImpl.allUsers();
+        return userService.allUsers();
     }
 
     @RequestMapping(value="/user", method = RequestMethod.POST)
     public int addUser(@RequestParam(name="name") String name, @RequestParam(name="password") String password){
-        return userServiceImpl.addUser(new User(name, password));
+        return userService.addUser(new User(name, password));
     }
 
 

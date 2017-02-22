@@ -33,4 +33,5 @@ dependencies {
     compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.2.0')
 	compile('mysql:mysql-connector-java:6.0.5')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('com.h2database:h2:1.4.193')
 }
