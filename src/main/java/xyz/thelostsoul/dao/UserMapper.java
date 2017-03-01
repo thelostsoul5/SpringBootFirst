@@ -1,9 +1,6 @@
 package xyz.thelostsoul.dao;
 
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import xyz.thelostsoul.bean.User;
 
 import java.util.List;
@@ -21,4 +18,7 @@ public interface UserMapper {
 
     @Insert("insert into user(name,password) value(#{name},#{password})")
     int insertUser(User user);
+
+    @SelectProvider(type = UserSqlBuilder.class, method = "buildGetUserByIds")
+    List<User> selectByIds(@Param("idList") List<Integer> idList);
 }

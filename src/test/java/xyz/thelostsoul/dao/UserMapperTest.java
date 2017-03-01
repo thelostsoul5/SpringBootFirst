@@ -7,6 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import xyz.thelostsoul.bean.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 /**
@@ -33,6 +36,16 @@ public class UserMapperTest {
     @Test
     public void insertUser() throws Exception {
 
+    }
+
+    @Test
+    public void selectByIds() throws Exception {
+        List<Integer> ids = new ArrayList<Integer>(){{
+            add(1);
+            add(2);
+        }};
+        List<User> users = dao.selectByIds(ids);
+        assertNotNull(users);
     }
 
 }
