@@ -1,5 +1,7 @@
 package xyz.thelostsoul.base;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -18,10 +20,14 @@ import javax.sql.DataSource;
 @Profile("dev")
 @AutoConfigureAfter(H2Config.class)
 public class TestDataConfig {
+
+    private final static Log LOG = LogFactory.getLog(TestDataConfig.class);
+
     @Bean(name="primaryDataSource")
     @Primary
     @ConfigurationProperties(prefix="datasource.primary")
     public DataSource primaryDataSource(){
+        LOG.info("---------------------init database-----------------------");
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("classpath:/H2_TYPE.sql")

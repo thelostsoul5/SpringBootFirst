@@ -45,6 +45,10 @@ public class UserMapperTest {
             add(2);
         }};
         List<User> users = dao.selectByIds(ids);
+        for (User u :
+                users) {
+            System.out.println(u);
+        }
         assertNotNull(users);
     }
 

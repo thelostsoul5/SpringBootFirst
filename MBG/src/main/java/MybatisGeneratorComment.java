@@ -16,8 +16,9 @@ public class MybatisGeneratorComment implements CommentGenerator {
     public void addFieldComment(Field field, IntrospectedTable introspectedTable,
                                 IntrospectedColumn introspectedColumn) {
         //判断数据库中该字段注释是否为空
-        if(introspectedColumn.getRemarks()==null||introspectedColumn.getRemarks()=="")
+        if(introspectedColumn.getRemarks()==null||introspectedColumn.getRemarks().equals("")) {
             return;
+        }
         field.addJavaDocLine("/**"+introspectedColumn.getRemarks()+"*/");
     }
 
@@ -39,16 +40,18 @@ public class MybatisGeneratorComment implements CommentGenerator {
     @Override
     public void addGetterComment(Method method, IntrospectedTable introspectedTable,
                                  IntrospectedColumn introspectedColumn) {
-        if(introspectedColumn.getRemarks()==null||introspectedColumn.getRemarks()=="")
+        if(introspectedColumn.getRemarks()==null||introspectedColumn.getRemarks()=="") {
             return;
+        }
         method.addJavaDocLine("/**获取"+introspectedColumn.getRemarks()+"*/");
     }
 
     @Override
     public void addSetterComment(Method method, IntrospectedTable introspectedTable,
                                  IntrospectedColumn introspectedColumn) {
-        if(introspectedColumn.getRemarks()==null||introspectedColumn.getRemarks()=="")
+        if(introspectedColumn.getRemarks()==null||introspectedColumn.getRemarks().equals("")) {
             return;
+        }
         method.addJavaDocLine("/**设置"+introspectedColumn.getRemarks()+"*/");
     }
 

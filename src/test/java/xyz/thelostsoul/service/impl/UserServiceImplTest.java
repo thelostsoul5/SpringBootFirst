@@ -1,5 +1,7 @@
 package xyz.thelostsoul.service.impl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -15,6 +17,8 @@ import static org.mockito.Mockito.when;
  * Created by jamie on 17-2-26.
  */
 public class UserServiceImplTest {
+
+    private static final Log LOG = LogFactory.getLog(UserServiceImplTest.class);
 
     @InjectMocks
     private UserServiceImpl userService;
@@ -32,6 +36,7 @@ public class UserServiceImplTest {
         User user = new User(1,"j","z");
         when(userMapper.selectByPrimaryKey(1)).thenReturn(user);
         User u = userService.getUserById(1);
+        LOG.info(u);
         assertEquals(user,u);
     }
 

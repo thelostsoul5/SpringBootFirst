@@ -48,4 +48,9 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public String toString(){
+        return "ID:"+this.id+";NAME:"+this.name;
+    }
+
 }
