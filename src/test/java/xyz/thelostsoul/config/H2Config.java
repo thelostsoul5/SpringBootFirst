@@ -1,7 +1,5 @@
-package xyz.thelostsoul.base;
+package xyz.thelostsoul.config;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.h2.tools.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,8 +13,6 @@ import java.sql.SQLException;
 @Configuration
 @Profile("dev")
 public class H2Config {
-
-    private final static Log LOG = LogFactory.getLog(H2Config.class);
 
     @Bean(name="startH2",initMethod = "start",destroyMethod = "stop")
     public Server startH2() throws SQLException {

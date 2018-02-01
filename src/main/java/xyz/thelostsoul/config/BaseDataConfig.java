@@ -1,0 +1,74 @@
+package xyz.thelostsoul.config;
+
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import xyz.thelostsoul.base.Database;
+import xyz.thelostsoul.base.MultipleDataSource;
+import xyz.thelostsoul.base.MultipleDataSourceTransactionFactory;
+
+import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
+
+
+@Configuration
+@Profile("dev")
+public class BaseDataConfig {
+
+    private final Logger LOG = LoggerFactory.getLogger(BaseDataConfig.class);
+
+    @Bean(name = "primaryDataSource")
+    @Primary
+    @ConfigurationProperties(prefix = "datasource.primary")
+    public DataSource primaryDataSource() {
+        LOG.info("-------------------- primaryDataSource init ---------------------");
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name = "secondDataSource")
+    @ConfigurationProperties(prefix = "datasource.second")
+    public DataSource secondDataSource() {
+        LOG.info("-------------------- secondDataSource init ---------------------");
+        return new EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.H2)
+                .setName("b")
+                .addScript("classpath:/H2_TYPE.sql")
+                .addScript("classpath:/INIT_TABLE.sql")
+                .addScript("classpath:/INIT_DATA2.sql")
+                .build();
+    }
+
+    @Bean(name = "mutilDataSource")
+    public DataSource mutilDataSource(@Qualifier("primaryDataSource") DataSource primaryDataSource,
+                                      @Qualifier("secondDataSource") DataSource secondDataSource) {
+        Map targetDataSources = new HashMap();
+        targetDataSources.put(Database.primary, primaryDataSource);
+        targetDataSources.put(Database.second, secondDataSource);
+        MultipleDataSource multipleDataSource = new MultipleDataSource();
+        multipleDataSource.setTargetDataSources(targetDataSources);
+        multipleDataSource.setDefaultTargetDataSource(primaryDataSource);
+        return multipleDataSource;
+    }
+
+    @Bean(name = "sqlSessionFactory")
+    @ConfigurationProperties(prefix = "mybatis")
+    public SqlSessionFactory sqlSessionFactory(@Qualifier("mutilDataSource") DataSource dataSource) throws Exception {
+        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
+        bean.setDataSource(dataSource);
+        bean.setTransactionFactory(new MultipleDataSourceTransactionFactory());
+        bean.setVfs(SpringBootVFS.class);
+        return bean.getObject();
+    }
+}

@@ -30,6 +30,7 @@ repositories {
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-devtools')
+	compile('org.springframework.boot:spring-boot-starter-aop')
     compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.2.0')
 	compile('mysql:mysql-connector-java:6.0.5')
 	compile('io.reactivex.rxjava2:rxjava:2.1.5')
