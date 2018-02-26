@@ -2,7 +2,6 @@ package xyz.thelostsoul.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.thelostsoul.bean.User;
 import xyz.thelostsoul.dao.UserMapper;
@@ -18,8 +17,11 @@ public class UserServiceImpl implements IUserService {
 
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
-    @Autowired
     private UserMapper userDao;
+
+    public UserServiceImpl(UserMapper userDao){
+        this.userDao = userDao;
+    }
 
     @Override
     public User getUserById(int id){

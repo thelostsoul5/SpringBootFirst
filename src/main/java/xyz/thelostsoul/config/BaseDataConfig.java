@@ -1,12 +1,12 @@
 package xyz.thelostsoul.config;
 
+import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +34,7 @@ public class BaseDataConfig {
     @ConfigurationProperties(prefix = "datasource.primary")
     public DataSource primaryDataSource() {
         LOG.info("-------------------- primaryDataSource init ---------------------");
-        return DataSourceBuilder.create().build();
+        return DruidDataSourceBuilder.create().build();
     }
 
     @Bean(name = "secondDataSource")

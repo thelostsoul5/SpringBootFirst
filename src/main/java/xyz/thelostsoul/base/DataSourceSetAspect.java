@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 @Configuration
 public class DataSourceSetAspect {
 
-    @Pointcut("execution(* xyz.thelostsoul..dao.*Mapper.*(..))")
+    @Pointcut("execution(* xyz.thelostsoul..dao.*Mapper.*(..))||execution(* xyz.thelostsoul..dao.*DAO.*(..))")
     public void setPoint() {}
 
     @Around("setPoint()")
