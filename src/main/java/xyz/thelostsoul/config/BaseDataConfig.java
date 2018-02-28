@@ -1,9 +1,6 @@
 package xyz.thelostsoul.config;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.mybatis.spring.SqlSessionFactoryBean;
-import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,7 +13,6 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import xyz.thelostsoul.base.Database;
 import xyz.thelostsoul.base.MultipleDataSource;
-import xyz.thelostsoul.base.MultipleDataSourceTransactionFactory;
 
 import javax.sql.DataSource;
 import java.util.HashMap;
@@ -50,8 +46,8 @@ public class BaseDataConfig {
                 .build();
     }
 
-    @Bean(name = "mutilDataSource")
-    public DataSource mutilDataSource(@Qualifier("primaryDataSource") DataSource primaryDataSource,
+    @Bean(name = "multiDataSource")
+    public DataSource multiDataSource(@Qualifier("primaryDataSource") DataSource primaryDataSource,
                                       @Qualifier("secondDataSource") DataSource secondDataSource) {
         Map targetDataSources = new HashMap();
         targetDataSources.put(Database.primary, primaryDataSource);
@@ -60,15 +56,5 @@ public class BaseDataConfig {
         multipleDataSource.setTargetDataSources(targetDataSources);
         multipleDataSource.setDefaultTargetDataSource(primaryDataSource);
         return multipleDataSource;
-    }
-
-    @Bean(name = "sqlSessionFactory")
-    @ConfigurationProperties(prefix = "mybatis")
-    public SqlSessionFactory sqlSessionFactory(@Qualifier("mutilDataSource") DataSource dataSource) throws Exception {
-        SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        bean.setDataSource(dataSource);
-        bean.setTransactionFactory(new MultipleDataSourceTransactionFactory());
-        bean.setVfs(SpringBootVFS.class);
-        return bean.getObject();
     }
 }

@@ -2,7 +2,9 @@ package xyz.thelostsoul.dao;
 
 import org.apache.ibatis.annotations.*;
 import xyz.thelostsoul.annotation.DataSourceSetter;
+import xyz.thelostsoul.annotation.TableTag;
 import xyz.thelostsoul.base.Database;
+import xyz.thelostsoul.base.split.impl.Evenly10SplitFieldParser;
 import xyz.thelostsoul.bean.User;
 
 import java.util.List;
@@ -10,6 +12,7 @@ import java.util.List;
 /**
  * Created by jamie on 17-2-13.
  */
+@TableTag(tableName = "user", separator = "", shardByField = "id", fieldParser = Evenly10SplitFieldParser.class)
 @Mapper
 public interface UserMapper {
     @DataSourceSetter(Database.second)
