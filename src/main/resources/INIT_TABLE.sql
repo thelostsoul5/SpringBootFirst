@@ -4,3 +4,73 @@ CREATE TABLE user
     name VARCHAR(64) NOT NULL,
     password VARCHAR(128) NOT NULL
 );
+
+CREATE TABLE user_0
+(
+    id INT(11) IDENTITY PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    password VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE user_1
+(
+    id INT(11) IDENTITY PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    password VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE user_2
+(
+    id INT(11) IDENTITY PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    password VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE user_3
+(
+    id INT(11) IDENTITY PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    password VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE user_4
+(
+    id INT(11) IDENTITY PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    password VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE user_5
+(
+    id INT(11) IDENTITY PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    password VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE user_6
+(
+    id INT(11) IDENTITY PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    password VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE user_7
+(
+    id INT(11) IDENTITY PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    password VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE user_8
+(
+    id INT(11) IDENTITY PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    password VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE user_9
+(
+    id INT(11) IDENTITY PRIMARY KEY,
+    name VARCHAR(64) NOT NULL,
+    password VARCHAR(128) NOT NULL
+);

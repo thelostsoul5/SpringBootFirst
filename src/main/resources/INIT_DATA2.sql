@@ -1,1 +1,1 @@
-INSERT INTO user (id, name, password) VALUES (1, 'zzm', 'z');
+INSERT INTO user_1 (id, name, password) VALUES (1, 'zzm', 'z');

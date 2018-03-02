@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by jamie on 17-2-13.
  */
-@TableTag(tableName = "user", separator = "", shardByField = "id", fieldParser = Evenly10SplitFieldParser.class)
+@TableTag(tableName = "user", separator = "_", shardByField = "id", fieldParser = Evenly10SplitFieldParser.class)
 @Mapper
 public interface UserMapper {
     @DataSourceSetter(Database.second)

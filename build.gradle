@@ -1,11 +1,9 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.0.RC2'
+		springBootVersion = '2.0.0.RELEASE'
 	}
 	repositories {
 		mavenCentral()
-		maven { url "https://repo.spring.io/snapshot" }
-		maven { url "https://repo.spring.io/milestone" }
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -26,8 +24,6 @@ targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
-	maven { url "https://repo.spring.io/snapshot" }
-	maven { url "https://repo.spring.io/milestone" }
 }
 
 
@@ -42,6 +38,9 @@ dependencies {
 	compile 'io.reactivex.rxjava2:rxjava:2.1.5'
 	compile 'org.jooq:joor:0.9.6'
 	compile 'com.h2database:h2:1.4.193'
+	compile 'org.webjars:webjars-locator:0.30'
+	compile 'org.webjars:vue:2.5.13'
+	compile 'org.webjars:jquery:3.3.1-1'
 	testCompile 'org.springframework.boot:spring-boot-starter-test'
 	testCompile 'org.mockito:mockito-all:2.0.2-beta'
 }
