@@ -52,7 +52,7 @@ public class TableSplitInterceptor implements Interceptor {
         if (annotations != null && annotations.length > 0) {
             Map<String, String> tableIndexMap = new HashMap<>(3);
             Object obj = boundSql.getParameterObject();
-            Map<String, Object> params = null;
+            Map<String, Object> params = new HashMap<>();
             if (obj instanceof Map) {
                 params = (Map<String, Object>) obj;
             }

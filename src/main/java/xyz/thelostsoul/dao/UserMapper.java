@@ -19,7 +19,7 @@ public interface UserMapper {
     @Select("select * from user where id=#{id}")
     User selectByPrimaryKey(@Param("id") int id);
 
-    @Select("select id,name from user")
+    @Select("select id,name from all_user")
     List<User> allUsers();
 
     @Insert("insert into user(name,password) value(#{name},#{password})")
