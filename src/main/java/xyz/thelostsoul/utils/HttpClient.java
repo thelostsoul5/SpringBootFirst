@@ -62,6 +62,8 @@ public class HttpClient {
 
         LOG.error(url.toString());
 
+        // 获取所有响应头字段
+        // 遍历所有的响应头字段
         Map<String, List<String>> map = connection.getHeaderFields();
         for (String key : map.keySet()) {
             LOG.error(key + " -> " + map.get(key));
@@ -69,8 +71,7 @@ public class HttpClient {
 
         try (InputStream is = this.connection.getInputStream();
              ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            // 获取所有响应头字段
-            // 遍历所有的响应头字段
+
             // 定义 BufferedReader输入流来读取URL的响应
             int size;
             final int BUFFER_SIZE = 1024;
