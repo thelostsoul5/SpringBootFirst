@@ -14,6 +14,7 @@ import java.util.Map;
 
 /**
  * http 客户端
+ * @author thelostsoul
  */
 public class HttpClient {
 
@@ -27,8 +28,8 @@ public class HttpClient {
         String paramString = null;
         if (param != null) {
             StringBuilder finalParamString = new StringBuilder();
-            param.forEach((k, v) -> finalParamString.append(k + "=" + v + "&"));
-            finalParamString.deleteCharAt(paramString.length() - 1);
+            param.forEach((k, v) -> finalParamString.append(k).append("=").append(v).append("&"));
+            finalParamString.deleteCharAt(finalParamString.length() - 1);
             paramString = finalParamString.toString();
         }
 
@@ -36,7 +37,7 @@ public class HttpClient {
         this.connection = this.url.openConnection();
     }
 
-    public void setHeader(Map<String, String> headers) throws Exception {
+    public void setHeader(Map<String, String> headers) {
         if (headers == null) {
             return;
         }
@@ -72,7 +73,7 @@ public class HttpClient {
             // 遍历所有的响应头字段
             // 定义 BufferedReader输入流来读取URL的响应
             int size;
-            int BUFFER_SIZE = 1024;
+            final int BUFFER_SIZE = 1024;
             byte[] buf = new byte[BUFFER_SIZE];
             while ((size = is.read(buf)) != -1) {
                 os.write(buf, 0, size);
@@ -109,7 +110,7 @@ public class HttpClient {
             out.flush();
             // 定义BufferedReader输入流来读取URL的响应
             int size;
-            int BUFFER_SIZE = 1024;
+            final int BUFFER_SIZE = 1024;
             byte[] buf = new byte[BUFFER_SIZE];
             while ((size = is.read(buf)) != -1) {
                 os.write(buf, 0, size);
