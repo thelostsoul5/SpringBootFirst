@@ -25,7 +25,7 @@ public class HttpClient {
     private URL url;
 
     public HttpClient(String url, Map<String, String> param) throws Exception {
-        String paramString = "";
+        String paramString = null;
         if (param != null) {
             StringBuilder finalParamString = new StringBuilder();
             param.forEach((k, v) -> finalParamString.append(k).append("=").append(v).append("&"));
@@ -33,7 +33,9 @@ public class HttpClient {
             paramString = finalParamString.toString();
         }
 
-        this.url = new URL(url + "?" + paramString);
+        String urlWithParam = (paramString == null) ? url : url + "?" + paramString;
+
+        this.url = new URL(urlWithParam);
         this.connection = (HttpURLConnection) this.url.openConnection();
     }
 
