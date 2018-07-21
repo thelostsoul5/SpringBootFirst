@@ -25,7 +25,7 @@ public class HttpClient {
     private URL url;
 
     public HttpClient(String url, Map<String, String> param) throws Exception {
-        String paramString = null;
+        String paramString = "";
         if (param != null) {
             StringBuilder finalParamString = new StringBuilder();
             param.forEach((k, v) -> finalParamString.append(k).append("=").append(v).append("&"));
