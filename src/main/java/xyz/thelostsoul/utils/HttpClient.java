@@ -7,8 +7,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +20,7 @@ public class HttpClient {
 
     private static final Log LOG = LogFactory.getLog(HttpClient.class);
 
-    private URLConnection connection;
+    private HttpURLConnection connection;
 
     private URL url;
 
@@ -34,7 +34,7 @@ public class HttpClient {
         }
 
         this.url = new URL(url + "?" + paramString);
-        this.connection = this.url.openConnection();
+        this.connection = (HttpURLConnection) this.url.openConnection();
     }
 
     public void setHeader(Map<String, String> headers) {
@@ -64,13 +64,15 @@ public class HttpClient {
 
         // 获取所有响应头字段
         // 遍历所有的响应头字段
-        Map<String, List<String>> map = connection.getHeaderFields();
+        Map<String, List<String>> map = this.connection.getHeaderFields();
         for (String key : map.keySet()) {
             LOG.error(key + " -> " + map.get(key));
         }
 
         try (InputStream is = this.connection.getInputStream();
              ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+
+            LOG.error("返回码：" + this.connection.getResponseCode());
 
             // 定义 BufferedReader输入流来读取URL的响应
             int size;
@@ -98,13 +100,17 @@ public class HttpClient {
 
         LOG.error(url.toString());
 
+        // 发送POST请求必须设置如下两行
+        this.connection.setDoInput(true);
+        this.connection.setDoOutput(true);
+        this.connection.setRequestMethod("POST");
+
         try (OutputStream out = this.connection.getOutputStream();
              InputStream is = this.connection.getInputStream();
              ByteArrayOutputStream os = new ByteArrayOutputStream()) {
-            // 发送POST请求必须设置如下两行
-            this.connection.setDoInput(true);
-            this.connection.setDoOutput(true);
-            // 获取URLConnection对象对应的输出流
+
+            LOG.error("返回码：" + this.connection.getResponseCode());
+
             // 发送请求参数
             out.write(body);
             // flush输出流的缓冲
