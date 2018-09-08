@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * http å®¢æˆ·ç«¯
+ * http ¿Í»§¶Ë
  * @author thelostsoul
  */
 public class HttpClient {
@@ -56,16 +56,16 @@ public class HttpClient {
     }
 
     /**
-     * å‘æŒ‡å®šURLå‘é€GETæ–¹æ³•çš„è¯·æ±‚
-     * @return è¿œç¨‹èµ„æºçš„å“åº”ç»“æœ
+     * ÏòÖ¸¶¨URL·¢ËÍGET·½·¨µÄÇëÇó
+     * @return Ô¶³Ì×ÊÔ´µÄÏìÓ¦½á¹û
      */
     public byte[] get() throws IOException {
         byte[] bytes;
 
         LOG.error(url.toString());
 
-        // è·å–æ‰€æœ‰å“åº”å¤´å­—æ®µ
-        // éå†æ‰€æœ‰çš„å“åº”å¤´å­—æ®µ
+        // »ñÈ¡ËùÓĞÏìÓ¦Í·×Ö¶Î
+        // ±éÀúËùÓĞµÄÏìÓ¦Í·×Ö¶Î
         Map<String, List<String>> map = this.connection.getHeaderFields();
         for (String key : map.keySet()) {
             LOG.error(key + " -> " + map.get(key));
@@ -74,9 +74,9 @@ public class HttpClient {
         try (InputStream is = this.connection.getInputStream();
              ByteArrayOutputStream os = new ByteArrayOutputStream()) {
 
-            LOG.error("è¿”å›ç ï¼š" + this.connection.getResponseCode());
+            LOG.error("·µ»ØÂë£º" + this.connection.getResponseCode());
 
-            // å®šä¹‰ BufferedReaderè¾“å…¥æµæ¥è¯»å–URLçš„å“åº”
+            // ¶¨Òå BufferedReaderÊäÈëÁ÷À´¶ÁÈ¡URLµÄÏìÓ¦
             int size;
             final int BUFFER_SIZE = 1024;
             byte[] buf = new byte[BUFFER_SIZE];
@@ -93,16 +93,16 @@ public class HttpClient {
     }
 
     /**
-     * å‘æŒ‡å®š URL å‘é€POSTæ–¹æ³•çš„è¯·æ±‚
-     * @param body è¯·æ±‚ä½“
-     * @return æ‰€ä»£è¡¨è¿œç¨‹èµ„æºçš„å“åº”ç»“æœ
+     * ÏòÖ¸¶¨ URL ·¢ËÍPOST·½·¨µÄÇëÇó
+     * @param body ÇëÇóÌå
+     * @return Ëù´ú±íÔ¶³Ì×ÊÔ´µÄÏìÓ¦½á¹û
      */
     public byte[] post(byte[] body) throws IOException {
         byte[] bytes;
 
         LOG.error(url.toString());
 
-        // å‘é€POSTè¯·æ±‚å¿…é¡»è®¾ç½®å¦‚ä¸‹ä¸¤è¡Œ
+        // ·¢ËÍPOSTÇëÇó±ØĞëÉèÖÃÈçÏÂÁ½ĞĞ
         this.connection.setDoInput(true);
         this.connection.setDoOutput(true);
         this.connection.setRequestMethod("POST");
@@ -111,13 +111,13 @@ public class HttpClient {
              InputStream is = this.connection.getInputStream();
              ByteArrayOutputStream os = new ByteArrayOutputStream()) {
 
-            LOG.error("è¿”å›ç ï¼š" + this.connection.getResponseCode());
+            LOG.error("·µ»ØÂë£º" + this.connection.getResponseCode());
 
-            // å‘é€è¯·æ±‚å‚æ•°
+            // ·¢ËÍÇëÇó²ÎÊı
             out.write(body);
-            // flushè¾“å‡ºæµçš„ç¼“å†²
+            // flushÊä³öÁ÷µÄ»º³å
             out.flush();
-            // å®šä¹‰BufferedReaderè¾“å…¥æµæ¥è¯»å–URLçš„å“åº”
+            // ¶¨ÒåBufferedReaderÊäÈëÁ÷À´¶ÁÈ¡URLµÄÏìÓ¦
             int size;
             final int BUFFER_SIZE = 1024;
             byte[] buf = new byte[BUFFER_SIZE];
