@@ -17,10 +17,7 @@ import xyz.thelostsoul.base.split.inter.ISplitFieldParser;
 import java.lang.annotation.Annotation;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 @Intercepts({
         @Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})
@@ -67,9 +64,23 @@ public class TableSplitInterceptor implements Interceptor {
                     Object field = params.get(shardByField);
                     if (field != null) {
                         String tableIndex = fieldParser.convert(field);
-                        tableIndexMap.put(tableName, separator + tableIndex);
+                        tableIndexMap.put(tableName, tableName + separator + tableIndex);
                     } else {
-                        throw new Exception("查询参数列表中没有可以确定分表的参数：" + tableName + "." +shardByField);
+                        List<String> tableIndexs = fieldParser.all();
+
+                        if (tableIndexs != null && tableIndexs.size() > 0) {
+                            StringBuilder builder = new StringBuilder();
+                            for (int i = 0, s = tableIndexs.size(); i < s; i++) {
+                                String tableIndex = tableIndexs.get(i);
+                                builder.append(" select * from ")
+                                        .append(tableName).append(separator).append(tableIndex);
+                                if (i < s-1) {
+                                    builder.append(" union all ");
+                                }
+                            }
+
+                            tableIndexMap.put(tableName, "(" + builder.toString() + ") all_"+tableName);
+                        }
                     }
                 }
             }

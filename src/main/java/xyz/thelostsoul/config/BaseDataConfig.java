@@ -1,6 +1,5 @@
 package xyz.thelostsoul.config;
 
-import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,7 +29,13 @@ public class BaseDataConfig {
     @ConfigurationProperties(prefix = "datasource.primary")
     public DataSource primaryDataSource() {
         LOG.info("-------------------- primaryDataSource init ---------------------");
-        return DruidDataSourceBuilder.create().build();
+        return new EmbeddedDatabaseBuilder()
+                .setType(EmbeddedDatabaseType.H2)
+                .setName("a")
+                .addScript("classpath:/H2_TYPE.sql")
+                .addScript("classpath:/INIT_TABLE.sql")
+                .addScript("classpath:/INIT_DATA.sql")
+                .build();
     }
 
     @Bean(name = "secondDataSource")

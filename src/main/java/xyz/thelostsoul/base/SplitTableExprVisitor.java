@@ -9,19 +9,19 @@ import java.util.Map;
 
 public class SplitTableExprVisitor extends MySqlASTVisitorAdapter {
 
-    private Map<String, String> tableIndexMap;
+    private Map<String, String> tableNameMap;
 
-    public SplitTableExprVisitor(Map<String, String> tableIndexMap) {
-        this.tableIndexMap = tableIndexMap;
+    public SplitTableExprVisitor(Map<String, String> tableNameMap) {
+        this.tableNameMap = tableNameMap;
     }
 
     @Override
     public boolean visit(SQLExprTableSource x) {
         SQLExpr expr = x.getExpr();
         String tableName = expr.toString();
-        String tableIndex = tableIndexMap.get(tableName);
-        if (!StringUtils.isEmpty(tableIndex)){
-            x.setExpr(tableName + tableIndex);
+        String finalTableName = tableNameMap.get(tableName);
+        if (!StringUtils.isEmpty(finalTableName)){
+            x.setExpr(finalTableName);
         }
         return true;
     }
