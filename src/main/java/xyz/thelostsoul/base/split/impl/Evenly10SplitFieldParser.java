@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * 分十张表
  * @author thelostsoul
  */
 public class Evenly10SplitFieldParser implements ISplitFieldParser {

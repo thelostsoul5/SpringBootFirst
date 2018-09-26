@@ -67,20 +67,8 @@ public class TableSplitInterceptor implements Interceptor {
                         tableIndexMap.put(tableName, tableName + separator + tableIndex);
                     } else {
                         List<String> tableIndexs = fieldParser.all();
-
-                        if (tableIndexs != null && tableIndexs.size() > 0) {
-                            StringBuilder builder = new StringBuilder();
-                            for (int i = 0, s = tableIndexs.size(); i < s; i++) {
-                                String tableIndex = tableIndexs.get(i);
-                                builder.append(" select * from ")
-                                        .append(tableName).append(separator).append(tableIndex);
-                                if (i < s-1) {
-                                    builder.append(" union all ");
-                                }
-                            }
-
-                            tableIndexMap.put(tableName, "(" + builder.toString() + ") all_"+tableName);
-                        }
+                        String unionTableSql = unionTable(tableName, separator, tableIndexs);
+                        tableIndexMap.put(tableName, unionTableSql);
                     }
                 }
             }
@@ -93,7 +81,6 @@ public class TableSplitInterceptor implements Interceptor {
             sql = SQLUtils.toSQLString(statementList, dbType);
             LOG.info("执行分表规则后的SQL：" + sql);
             metaStatementHandler.setValue("delegate.boundSql.sql", sql);
-
         }
 
         return invocation.proceed();
@@ -108,4 +95,20 @@ public class TableSplitInterceptor implements Interceptor {
     public void setProperties(Properties properties) {
 
     }
+
+    private static String unionTable(String tableName, String separator, List<String> tableIndexs) {
+        StringBuilder builder = new StringBuilder();
+        if (tableIndexs != null && tableIndexs.size() > 0) {
+            for (int i = 0, s = tableIndexs.size(); i < s; i++) {
+                String tableIndex = tableIndexs.get(i);
+                builder.append(" select * from ")
+                        .append(tableName).append(separator).append(tableIndex);
+                if (i < s-1) {
+                    builder.append(" union all ");
+                }
+            }
+        }
+        return "(" + builder.toString() + ") all_"+tableName;
+    }
+
 }
