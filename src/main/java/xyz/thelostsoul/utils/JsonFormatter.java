@@ -84,7 +84,7 @@ public class JsonFormatter {
             return prettyJson;
         }
 
-        return prettyJson.replaceAll("\r\n", "").replaceAll("\n", "").replaceAll("\t", "");
+        return prettyJson.replaceAll("\\r?\\n\\s*", "");
     }
 
     private static String manyString(String s, int l) throws Exception {
