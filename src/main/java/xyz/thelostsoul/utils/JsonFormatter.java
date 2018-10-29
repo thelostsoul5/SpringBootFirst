@@ -65,8 +65,11 @@ public class JsonFormatter {
             if (value instanceof Map) {
                 prettyJson.append(format((Map<String, Object>) value, level + 1)).append(COMMAS).append(RETURN);
             } else if (value instanceof List) {
-                prettyJson.append(LBRACKET).append(RETURN);
+                prettyJson.append(LBRACKET);
                 List tmp = (List) value;
+                if (tmp.size() > 0) {
+                    prettyJson.append(RETURN);
+                }
                 for (int i = 0, j = tmp.size(); i < j; i++) {
                     Object o = tmp.get(i);
                     if (o instanceof Map) {
