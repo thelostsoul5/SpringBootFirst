@@ -38,7 +38,21 @@ public class JsonFormatter {
         return formatJson(json);
     }
 
-    public static String format(Map<String, Object> jsonMap, int level) throws Exception {
+    public static String format(Map<String, Object> jsonMap, boolean color) throws Exception {
+        JsonFormatter.color = color;
+        return format(jsonMap, 1);
+    }
+
+    public static String unformat(String prettyJson) throws Exception {
+        if (StringUtils.isBlank(prettyJson)) {
+            return prettyJson;
+        }
+
+        return prettyJson.replaceAll("\\r?\\n\\s*", "");
+    }
+
+
+    private static String format(Map<String, Object> jsonMap, int level) throws Exception {
         if (MapUtils.isEmpty(jsonMap)) {
             return "";
         }
@@ -83,19 +97,6 @@ public class JsonFormatter {
         prettyJson.delete(prettyJson.length()-3, prettyJson.length()-2);
         prettyJson.append(manyString(TAB, level-1)).append(RCURLY);
         return prettyJson.toString();
-    }
-
-    public static String format(Map<String, Object> jsonMap, boolean color) throws Exception {
-        JsonFormatter.color = color;
-        return format(jsonMap, 1);
-    }
-
-    public static String unformat(String prettyJson) throws Exception {
-        if (StringUtils.isBlank(prettyJson)) {
-            return prettyJson;
-        }
-
-        return prettyJson.replaceAll("\\r?\\n\\s*", "");
     }
 
     private static String manyString(String s, int l) throws Exception {
