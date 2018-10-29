@@ -16,12 +16,13 @@ public class JsonFormatter {
     private static final String RETURN = "\r\n";
     private static final String TAB = "    ";
     private static final String COMMAS = ",";
-    private static final String COLONS = ":";
+    private static final String COLONS = ": ";
     private static final String QUOTE = "\"";
     private static final String LCURLY = "{";
     private static final String RCURLY = "}";
     private static final String LBRACKET = "[";
     private static final String RBRACKET = "]";
+    private static boolean color = true;
 
     public static String formatJson(String json) throws Exception {
         if (StringUtils.isBlank(json)) {
@@ -32,6 +33,11 @@ public class JsonFormatter {
         return format(jsonMap, 1);
     }
 
+    public static String formatJson(String json, boolean color) throws Exception {
+        JsonFormatter.color = color;
+        return formatJson(json);
+    }
+
     public static String format(Map<String, Object> jsonMap, int level) throws Exception {
         if (MapUtils.isEmpty(jsonMap)) {
             return "";
@@ -40,7 +46,7 @@ public class JsonFormatter {
         prettyJson.append(LCURLY).append(RETURN);
         Set<String> keys = jsonMap.keySet();
         for (String key : keys) {
-            prettyJson.append(manyString(TAB, level)).append(QUOTE).append(key).append(QUOTE).append(COLONS);
+            prettyJson.append(manyString(TAB, level)).append(QUOTE).append(blue(key)).append(QUOTE).append(COLONS);
             Object value = jsonMap.get(key);
             if (value instanceof Map) {
                 prettyJson.append(format((Map<String, Object>) value, level + 1)).append(COMMAS).append(RETURN);
@@ -56,7 +62,7 @@ public class JsonFormatter {
                         }
                         prettyJson.append(RETURN);
                     } else if (o instanceof String) {
-                        prettyJson.append(QUOTE).append(o).append(QUOTE);
+                        prettyJson.append(QUOTE).append(red((String) o)).append(QUOTE);
                         if (i != j - 1) {
                             prettyJson.append(COMMAS);
                         }
@@ -69,7 +75,7 @@ public class JsonFormatter {
                 }
                 prettyJson.append(manyString(TAB, level)).append(RBRACKET).append(COMMAS).append(RETURN);
             } else if (value instanceof String) {
-                prettyJson.append(QUOTE).append(value).append(QUOTE).append(COMMAS).append(RETURN);
+                prettyJson.append(QUOTE).append(red((String) value)).append(QUOTE).append(COMMAS).append(RETURN);
             } else {
                 prettyJson.append(value).append(COMMAS).append(RETURN);
             }
@@ -77,6 +83,11 @@ public class JsonFormatter {
         prettyJson.delete(prettyJson.length()-3, prettyJson.length()-2);
         prettyJson.append(manyString(TAB, level-1)).append(RCURLY);
         return prettyJson.toString();
+    }
+
+    public static String format(Map<String, Object> jsonMap, boolean color) throws Exception {
+        JsonFormatter.color = color;
+        return format(jsonMap, 1);
     }
 
     public static String unformat(String prettyJson) throws Exception {
@@ -96,6 +107,22 @@ public class JsonFormatter {
             r.append(s);
         }
         return r.toString();
+    }
+
+    private static String blue(String s) {
+        if (color) {
+            return "\033[34m" + s + "\033[39m";
+        } else {
+            return s;
+        }
+    }
+
+    private static String red(String s) {
+        if (color) {
+            return "\033[31m" + s + "\033[39m";
+        } else {
+            return s;
+        }
     }
 }
 
