@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/webjars/vue/vue.js"></script>
+    <script src="/webjars/iview/dist/iview.js"></script>
+    <link type="text/css" rel="stylesheet" href="/webjars/iview/dist/styles/iview.css">
+</head>
+<body>
+<div id="app">
+    <i-switch v-model="switch1" @on-change="change">
+        <span slot="open">开</span>
+        <span slot="close">关</span>
+    </i-switch>
+</div>
+</body>
+<script>
+    ///////////////iview/////////////////
+    var Main = {
+        data () {
+            return {
+                switch1: false
+            }
+        },
+        methods: {
+            change (status) {
+                if (status) {
+                    this.$Message.info('开');
+                } else {
+                    this.$Message.info('关');
+                }
+            }
+        }
+    };
+
+    var Component = Vue.extend(Main);
+    new Component().$mount('#app');
+</script>
+</html>
