@@ -22,7 +22,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import xyz.thelostsoul.base.MultipleDataSourceTransactionFactory;
-import xyz.thelostsoul.base.TableSplitInterceptor;
+import xyz.thelostsoul.base.TableRouteInterceptor;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -35,8 +35,8 @@ import java.util.List;
 public class MybatisAutoConfig {
 
     @Bean(name = "tableSplitInterceptor")
-    public TableSplitInterceptor tableSplitInterceptor() {
-        return new TableSplitInterceptor();
+    public TableRouteInterceptor tableSplitInterceptor() {
+        return new TableRouteInterceptor();
     }
 
     private final MybatisProperties properties;

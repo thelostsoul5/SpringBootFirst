@@ -1,8 +1,8 @@
-package xyz.thelostsoul.base.split.inter;
+package xyz.thelostsoul.base.parser.inter;
 
 import java.util.List;
 
-public interface ISplitFieldParser {
+public interface IRouteFieldParser {
     /**
      * 处理分表字段，得到分表索引
      * @param var1 分表字段值

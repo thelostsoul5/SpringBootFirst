@@ -1,6 +1,6 @@
-package xyz.thelostsoul.base.split.impl;
+package xyz.thelostsoul.base.parser.impl;
 
-import xyz.thelostsoul.base.split.inter.ISplitFieldParser;
+import xyz.thelostsoul.base.parser.inter.IRouteFieldParser;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  * 分十张表
  * @author thelostsoul
  */
-public class Evenly10SplitFieldParser implements ISplitFieldParser {
+public class Evenly10RouteFieldParser implements IRouteFieldParser {
 
     @Override
     public String convert(Object field) throws Exception {

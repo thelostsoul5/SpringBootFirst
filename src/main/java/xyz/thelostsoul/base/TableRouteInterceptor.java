@@ -12,7 +12,7 @@ import org.apache.ibatis.reflection.SystemMetaObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.thelostsoul.annotation.TableTag;
-import xyz.thelostsoul.base.split.inter.ISplitFieldParser;
+import xyz.thelostsoul.base.parser.inter.IRouteFieldParser;
 
 import java.lang.annotation.Annotation;
 import java.sql.Connection;
@@ -22,7 +22,7 @@ import java.util.*;
 @Intercepts({
         @Signature(type = StatementHandler.class, method = "prepare", args = {Connection.class, Integer.class})
 })
-public class TableSplitInterceptor implements Interceptor {
+public class TableRouteInterceptor implements Interceptor {
 
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
@@ -58,9 +58,9 @@ public class TableSplitInterceptor implements Interceptor {
                     String tableName = ((TableTag) annotation).tableName();
                     String separator = ((TableTag) annotation).separator();
                     String shardByField = ((TableTag) annotation).shardByField();
-                    Class<? extends ISplitFieldParser> fieldParserClass = ((TableTag) annotation).fieldParser();
+                    Class<? extends IRouteFieldParser> fieldParserClass = ((TableTag) annotation).fieldParser();
 
-                    ISplitFieldParser fieldParser = fieldParserClass.newInstance();
+                    IRouteFieldParser fieldParser = fieldParserClass.newInstance();
                     Object field = params.get(shardByField);
                     if (field != null) {
                         String tableIndex = fieldParser.convert(field);
@@ -74,7 +74,7 @@ public class TableSplitInterceptor implements Interceptor {
             }
 
             List<SQLStatement> statementList = SQLUtils.parseStatements(sql, dbType);
-            SplitTableExprVisitor visitor = new SplitTableExprVisitor(tableIndexMap);
+            RouteTableExprVisitor visitor = new RouteTableExprVisitor(tableIndexMap);
             for (SQLStatement sqlStatement : statementList) {
                 sqlStatement.accept(visitor);
             }

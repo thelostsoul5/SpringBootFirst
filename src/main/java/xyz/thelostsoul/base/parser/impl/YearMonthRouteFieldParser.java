@@ -1,8 +1,8 @@
-package xyz.thelostsoul.base.split.impl;
+package xyz.thelostsoul.base.parser.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xyz.thelostsoul.base.split.inter.ISplitFieldParser;
+import xyz.thelostsoul.base.parser.inter.IRouteFieldParser;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -14,9 +14,9 @@ import java.util.List;
 /**
  * 年月分表，默认查三个月
  */
-public class YearMonthSplitFieldParser implements ISplitFieldParser {
+public class YearMonthRouteFieldParser implements IRouteFieldParser {
 
-    private static final Logger LOG = LoggerFactory.getLogger(YearMonthSplitFieldParser.class);
+    private static final Logger LOG = LoggerFactory.getLogger(YearMonthRouteFieldParser.class);
 
     @Override
     public String convert(Object var1) throws Exception {

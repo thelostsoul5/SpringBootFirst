@@ -1,6 +1,6 @@
 package xyz.thelostsoul.annotation;
 
-import xyz.thelostsoul.base.split.inter.ISplitFieldParser;
+import xyz.thelostsoul.base.parser.inter.IRouteFieldParser;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -13,5 +13,5 @@ public @interface TableTag {
     String tableName();
     String separator();
     String shardByField();
-    Class<? extends ISplitFieldParser> fieldParser();
+    Class<? extends IRouteFieldParser> fieldParser();
 }

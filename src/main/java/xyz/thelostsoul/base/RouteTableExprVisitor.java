@@ -7,11 +7,11 @@ import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
-public class SplitTableExprVisitor extends MySqlASTVisitorAdapter {
+public class RouteTableExprVisitor extends MySqlASTVisitorAdapter {
 
     private Map<String, String> tableNameMap;
 
-    public SplitTableExprVisitor(Map<String, String> tableNameMap) {
+    public RouteTableExprVisitor(Map<String, String> tableNameMap) {
         this.tableNameMap = tableNameMap;
     }
 

@@ -1,5 +1,7 @@
 package xyz.thelostsoul.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.thelostsoul.bean.User;
@@ -22,8 +24,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public List<User> allUsers(){
-        return userService.allUsers();
+    public PageInfo<User> allUsers(@RequestParam(name="pageNum") int pageNum, @RequestParam(name="pageSize") int pageSize){
+        if (pageNum > 0 && pageSize > 0) {
+            PageHelper.startPage(pageNum, pageSize);
+        }
+        List<User> userList = userService.allUsers();
+        return new PageInfo<>(userList);
     }
 
     @RequestMapping(value="/user", method = RequestMethod.POST)
