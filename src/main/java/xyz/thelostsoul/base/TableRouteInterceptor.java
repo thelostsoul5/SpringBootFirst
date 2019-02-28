@@ -34,6 +34,7 @@ public class TableRouteInterceptor implements Interceptor {
         Connection currentConnection = (Connection) args[0];
         DatabaseMetaData metaData = currentConnection.getMetaData();
         String dbType = metaData.getDatabaseProductName();
+		dbType = dbType.toLowerCase();
 
         BoundSql boundSql = statementHandler.getBoundSql();
         String sql = boundSql.getSql();

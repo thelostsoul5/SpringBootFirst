@@ -34,11 +34,6 @@ import java.util.List;
 @Import({BaseDataConfig.class})
 public class MybatisAutoConfig {
 
-    @Bean(name = "tableSplitInterceptor")
-    public TableRouteInterceptor tableSplitInterceptor() {
-        return new TableRouteInterceptor();
-    }
-
     private final MybatisProperties properties;
 
     private final Interceptor[] interceptors;
