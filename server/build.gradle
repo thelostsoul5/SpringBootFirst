@@ -1,0 +1,75 @@
+buildscript {
+    ext {
+        springBootVersion = "2.1.2.RELEASE"
+        mybatisVersion = "1.3.1"
+        pagehelperVersion = "1.2.3"
+        druidVersion = "1.1.9"
+        mysqlDriverVersion = "6.0.5"
+        h2Version = "1.4.193"
+        rxjavaVersion = "2.1.5"
+        joorVersion = "0.9.6"
+        ognlVersion = "3.2.1"
+        gsonVersion = "2.8.5"
+        collectionsVersion = "4.2"
+        langVersion = "3.7"
+        shiroVersion = "1.4.0"
+    }
+    repositories {
+        maven { url "http://maven.aliyun.com/mvn/repository/" }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: "java"
+apply plugin: "eclipse"
+apply plugin: "org.springframework.boot"
+apply plugin: "io.spring.dependency-management"
+
+jar {
+    baseName = "server"
+    version = "1.0-SNAPSHOT"
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    maven { url "http://maven.aliyun.com/mvn/repository/" }
+    mavenCentral()
+    maven { url "https://repo.spring.io/snapshot" }
+    maven { url "https://repo.spring.io/milestone" }
+}
+
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-aop"
+    implementation "org.springframework.boot:spring-boot-starter-cache"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-freemarker"
+    implementation "org.springframework.boot:spring-boot-devtools"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis"
+    implementation "org.springframework.session:spring-session-data-redis"
+
+    implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisVersion}"
+    implementation "com.github.pagehelper:pagehelper-spring-boot-starter:${pagehelperVersion}"
+    implementation "org.apache.shiro:shiro-spring-boot-web-starter:${shiroVersion}"
+    implementation "com.alibaba:druid-spring-boot-starter:${druidVersion}"
+    implementation "mysql:mysql-connector-java:${mysqlDriverVersion}"
+    implementation "com.h2database:h2:${h2Version}"
+    implementation "com.alibaba:druid:${druidVersion}"
+
+    implementation "io.reactivex.rxjava2:rxjava:${rxjavaVersion}"
+    implementation "org.jooq:joor:${joorVersion}"
+    implementation "ognl:ognl:${ognlVersion}"
+    implementation "com.google.code.gson:gson:${gsonVersion}"
+    implementation "org.apache.commons:commons-collections4:${collectionsVersion}"
+    implementation "org.apache.commons:commons-lang3:${langVersion}"
+
+    implementation project(":web")//serverÄ£¿éÒÀÀµwebÄ£¿é
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.mockito:mockito-all:2.0.2-beta"
+}

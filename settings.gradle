@@ -1,2 +1,5 @@
+rootProject.name = 'first'
+include 'web'
+include 'server'
 include 'MBG'
 
