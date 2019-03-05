@@ -5,6 +5,15 @@
       <a-row>
         <a-col :span="8"></a-col>
         <a-col :span="8">
+          <a-alert
+            v-if="visible"
+            message="Error"
+            :description="errorMessage"
+            type="error"
+            id="login-alert"
+            class="error-alert"
+            showIcon
+          />
           <a-form
             id="components-form-demo-normal-login"
             :form="form"
@@ -84,7 +93,10 @@
   export default {
     name: "Login",
     data() {
-      return {};
+      return {
+        visible: false,
+        errorMessage: ""
+      }
     },
     beforeCreate () {
       this.form = this.$form.createForm(this);
@@ -97,12 +109,18 @@
             console.log('Received values of form: ', values);
           }
 
-          this.$http.post('/api/login',
-                          values)
+          this.axios.post('/api/login', this.qs.stringify(values))
             .then((response) => {
               console.log(response);
-            }, (response) => {
-              console.log(response);
+              if ("success" === response.data) {
+                this.$router.push("/user");
+              } else {
+                this.visible = true;
+                this.errorMessage = response.data;
+              }
+            })
+            .catch((error) => {
+              console.log(error);
             });
         });
       }
