@@ -3,6 +3,8 @@ package xyz.thelostsoul.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import xyz.thelostsoul.bean.User;
 import xyz.thelostsoul.service.inter.IUserService;
@@ -20,24 +22,22 @@ public class UserController {
     private IUserService userService;
 
     @RequestMapping(value="/user/{id}", method= RequestMethod.GET)
-    public User queryUserMessage(@PathVariable int id){
-        return userService.getUserById(id);
+    public ResponseEntity<Object> queryUserMessage(@PathVariable int id){
+        return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public PageInfo<User> allUsers(@RequestParam(name="pageNum") int pageNum, @RequestParam(name="pageSize") int pageSize){
+    public ResponseEntity<Object> allUsers(@RequestParam(name="pageNum") int pageNum, @RequestParam(name="pageSize") int pageSize){
         if (pageNum > 0 && pageSize > 0) {
             PageHelper.startPage(pageNum, pageSize);
         }
         List<User> userList = userService.allUsers();
-        return new PageInfo<>(userList);
+        return new ResponseEntity<>(new PageInfo<>(userList), HttpStatus.OK);
     }
 
     @RequestMapping(value="/user", method = RequestMethod.POST)
-    public int addUser(@RequestParam(name="name") String name, @RequestParam(name="password") String password){
-        return userService.addUser(new User(name, password));
+    public ResponseEntity<Object> addUser(@RequestParam(name="name") String name, @RequestParam(name="password") String password){
+        Integer count = userService.addUser(new User(name, password));
+        return new ResponseEntity<>(count, HttpStatus.OK);
     }
-
-
-
 }
