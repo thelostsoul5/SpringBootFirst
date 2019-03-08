@@ -1,6 +1,6 @@
 <template>
   <a-table :columns="columns"
-           :rowKey="record => record.login.uuid"
+           :rowKey="record => record.id"
            :dataSource="data"
            :pagination="pagination"
            :loading="loading"
@@ -50,16 +50,23 @@
           ...filters
         });
       },
-      fetch (params = {}) {
-        console.log('params:', params);
+      fetch (ps = {}) {
+        ps = {
+          pageSize: 10,
+          pageNum: 1,
+          ...ps
+        };
+        console.log('params:', ps);
         this.loading = true;
 
-        this.axios.get('/api/user', this.qs.stringify(params))
-          .then((response) => {
+        this.axios.get('/api/user', {params: ps})
+          .then((resp) => {
+            console.log("response");
+            console.log(resp.data);
             const pagination = { ...this.pagination };
-            pagination.total = response.total;
+            pagination.total = resp.data.total;
             this.loading = false;
-            this.data = response.results;
+            this.data = resp.data.list;
             this.pagination = pagination;
           })
           .catch((error) => {
