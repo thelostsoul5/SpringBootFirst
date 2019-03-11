@@ -16,9 +16,9 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-    // É¢ÁĞËã·¨
+    // æ•£åˆ—ç®—æ³•
     private static final String HASH_ALGORITHM = "md5";
-    // É¢ÁĞ´ÎÊı
+    // æ•£åˆ—æ¬¡æ•°
     private static final Integer HASH_TIMES = 2;
 
     @Bean
@@ -31,8 +31,8 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("/");
         shiroFilterFactoryBean.setSuccessUrl("/");
 
-        //ÅäÖÃ²»µÇÂ¼¿ÉÒÔ·ÃÎÊµÄ×ÊÔ´£¬anon ±íÊ¾×ÊÔ´¶¼¿ÉÒÔÄäÃû·ÃÎÊ
-        //ÅäÖÃ¼Ç×¡ÎÒ»òÈÏÖ¤Í¨¹ı¿ÉÒÔ·ÃÎÊµÄµØÖ·
+        //é…ç½®ä¸ç™»å½•å¯ä»¥è®¿é—®çš„èµ„æºï¼Œanon è¡¨ç¤ºèµ„æºéƒ½å¯ä»¥åŒ¿åè®¿é—®
+        //é…ç½®è®°ä½æˆ‘æˆ–è®¤è¯é€šè¿‡å¯ä»¥è®¿é—®çš„åœ°å€
         filterChainDefinitionMap.put("/api/login", "anon");
         filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/css/**", "anon");
@@ -40,9 +40,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/img/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
 
-        //logoutÊÇshiroÌá¹©µÄ¹ıÂËÆ÷
+        //logoutæ˜¯shiroæä¾›çš„è¿‡æ»¤å™¨
         filterChainDefinitionMap.put("/api/logout", "logout");
-        //user±íÊ¾ÅäÖÃ¼Ç×¡ÎÒ»òÈÏÖ¤Í¨¹ı¿ÉÒÔ·ÃÎÊµÄµØÖ·
+        //userè¡¨ç¤ºé…ç½®è®°ä½æˆ‘æˆ–è®¤è¯é€šè¿‡å¯ä»¥è®¿é—®çš„åœ°å€
         filterChainDefinitionMap.put("/**", "user");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);

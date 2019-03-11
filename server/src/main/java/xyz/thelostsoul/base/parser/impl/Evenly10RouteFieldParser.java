@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * ·ÖÊ®ÕÅ±í
+ * åˆ†åå¼ è¡¨
  * @author thelostsoul
  */
 public class Evenly10RouteFieldParser implements IRouteFieldParser {
@@ -23,7 +23,7 @@ public class Evenly10RouteFieldParser implements IRouteFieldParser {
         else if (field instanceof String) {
             i = Long.parseLong((String) field);
         } else {
-            throw new Exception ("ÓÃÓÚ·Ö±íµÄ×Ö¶Î·ÇºÏ·¨ÀàĞÍ£¡");
+            throw new Exception ("ç”¨äºåˆ†è¡¨çš„å­—æ®µéåˆæ³•ç±»å‹ï¼");
         }
         rtn = i%10 + "";
         return rtn;

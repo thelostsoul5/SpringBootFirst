@@ -18,7 +18,7 @@ public class LoginController {
 
         ResponseEntity<String> response = new ResponseEntity<>("success", HttpStatus.OK);
         if (user.getId() == null || user.getPassword() == null) {
-            response = new ResponseEntity<>("���󲻹淶", HttpStatus.BAD_REQUEST);
+            response = new ResponseEntity<>("请求不规范", HttpStatus.BAD_REQUEST);
         }
         UsernamePasswordToken token = new UsernamePasswordToken(String.valueOf(user.getId()), user.getPassword());
         subject.login(token);

@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="GBK"?>
 <configuration>
-    <!--0. ÈÕÖ¾¸ñÊ½ºÍÑÕÉ«äÖÈ¾ -->
-    <!-- ²ÊÉ«ÈÕÖ¾ÒÀÀµµÄäÖÈ¾Àà -->
+    <!--0. æ—¥å¿—æ ¼å¼å’Œé¢œè‰²æ¸²æŸ“ -->
+    <!-- å½©è‰²æ—¥å¿—ä¾èµ–çš„æ¸²æŸ“ç±» -->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
     <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
     <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
-    <!-- ²ÊÉ«ÈÕÖ¾¸ñÊ½ -->
+    <!-- å½©è‰²æ—¥å¿—æ ¼å¼ -->
     <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
 
-    <!--1. Êä³öµ½¿ØÖÆÌ¨-->
+    <!--1. è¾“å‡ºåˆ°æŽ§åˆ¶å°-->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <!--´ËÈÕÖ¾appenderÊÇÎª¿ª·¢Ê¹ÓÃ£¬Ö»ÅäÖÃ×îµ×¼¶±ð£¬¿ØÖÆÌ¨Êä³öµÄÈÕÖ¾¼¶±ðÊÇ´óÓÚ»òµÈÓÚ´Ë¼¶±ðµÄÈÕÖ¾ÐÅÏ¢-->
+        <!--æ­¤æ—¥å¿—appenderæ˜¯ä¸ºå¼€å‘ä½¿ç”¨ï¼Œåªé…ç½®æœ€åº•çº§åˆ«ï¼ŒæŽ§åˆ¶å°è¾“å‡ºçš„æ—¥å¿—çº§åˆ«æ˜¯å¤§äºŽæˆ–ç­‰äºŽæ­¤çº§åˆ«çš„æ—¥å¿—ä¿¡æ¯-->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>debug</level>
         </filter>
         <encoder>
             <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
-            <!-- ÉèÖÃ×Ö·û¼¯ -->
+            <!-- è®¾ç½®å­—ç¬¦é›† -->
             <charset>GBK</charset>
         </encoder>
     </appender>
 
-    <!-- ¿ØÖÆÌ¨Êä³öÈÕÖ¾¼¶±ð -->
+    <!-- æŽ§åˆ¶å°è¾“å‡ºæ—¥å¿—çº§åˆ« -->
     <root level="debug">
         <appender-ref ref="CONSOLE" />
     </root>

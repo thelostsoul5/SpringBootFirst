@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * ÄêÔÂ·Ö±í£¬Ä¬ÈÏ²éÈı¸öÔÂ
+ * å¹´æœˆåˆ†è¡¨ï¼Œé»˜è®¤æŸ¥ä¸‰ä¸ªæœˆ
  */
 public class YearMonthRouteFieldParser implements IRouteFieldParser {
 
@@ -29,7 +29,7 @@ public class YearMonthRouteFieldParser implements IRouteFieldParser {
         } else if (var1 instanceof String) {
             yyyyMM = (String) var1;
         } else {
-            LOG.error("È¡ÄêÔÂ·Ö±íÊ§°Ü£¬Ä¬ÈÏµ±ÔÂ");
+            LOG.error("å–å¹´æœˆåˆ†è¡¨å¤±è´¥ï¼Œé»˜è®¤å½“æœˆ");
         }
         return yyyyMM;
     }

@@ -38,7 +38,7 @@ public class TableRouteInterceptor implements Interceptor {
 
         BoundSql boundSql = statementHandler.getBoundSql();
         String sql = boundSql.getSql();
-        LOG.info("Ô­SQL£º" + sql);
+        LOG.info("åŸSQLï¼š" + sql);
 
         MetaObject metaStatementHandler = SystemMetaObject.forObject(statementHandler);
         MappedStatement mappedStatement = (MappedStatement) metaStatementHandler.getValue("delegate.mappedStatement");
@@ -80,7 +80,7 @@ public class TableRouteInterceptor implements Interceptor {
                 sqlStatement.accept(visitor);
             }
             sql = SQLUtils.toSQLString(statementList, dbType);
-            LOG.info("Ö´ĞĞ·Ö±í¹æÔòºóµÄSQL£º" + sql);
+            LOG.info("æ‰§è¡Œåˆ†è¡¨è§„åˆ™åçš„SQLï¼š" + sql);
             metaStatementHandler.setValue("delegate.boundSql.sql", sql);
         }
 

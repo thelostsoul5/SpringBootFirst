@@ -24,7 +24,7 @@ buildscript {
 }
 
 apply plugin: "java"
-apply plugin: "eclipse"
+apply plugin: "idea"
 apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
 
@@ -68,7 +68,7 @@ dependencies {
     implementation "org.apache.commons:commons-collections4:${collectionsVersion}"
     implementation "org.apache.commons:commons-lang3:${langVersion}"
 
-    implementation project(":web")//serverÄ£¿éÒÀÀµwebÄ£¿é
+    implementation project(":web")//serveræ¨¡å—ä¾èµ–webæ¨¡å—
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.mockito:mockito-all:2.0.2-beta"

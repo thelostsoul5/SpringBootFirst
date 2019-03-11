@@ -20,35 +20,35 @@ public class WebExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Object> unknownAccount(UnknownAccountException e) {
-        String error = "ÓÃ»§Ãû/ÃÜÂë´íÎó";
+        String error = "ç”¨æˆ·å/å¯†ç é”™è¯¯";
         LOG.error(error, e);
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler
     public ResponseEntity<Object> unknownAccount(IncorrectCredentialsException e) {
-        String error = "ÓÃ»§Ãû/ÃÜÂë´íÎó";
+        String error = "ç”¨æˆ·å/å¯†ç é”™è¯¯";
         LOG.error(error, e);
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler
     public ResponseEntity<Object> excessiveAttempts(ExcessiveAttemptsException e) {
-        String error = "µÇÂ¼Ê§°Ü¶à´Î£¬ÕË»§Ëø¶¨10·ÖÖÓ";
+        String error = "ç™»å½•å¤±è´¥å¤šæ¬¡ï¼Œè´¦æˆ·é”å®š10åˆ†é’Ÿ";
         LOG.error(error, e);
         return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler
     public ResponseEntity<Object> authentication(AuthenticationException e) {
-        String error = "ÆäËûÈÏÖ¤´íÎó£º" + e.getMessage();
+        String error = "å…¶ä»–è®¤è¯é”™è¯¯ï¼š" + e.getMessage();
         LOG.error(error, e);
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler
     public ResponseEntity<Object> unknownException(Exception e) {
-        String error = "·¢ÉúÁËÎ´ÖªÒì³££º" + e.getMessage();
+        String error = "å‘ç”Ÿäº†æœªçŸ¥å¼‚å¸¸ï¼š" + e.getMessage();
         LOG.error(error, e);
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }

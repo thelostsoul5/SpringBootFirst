@@ -26,7 +26,7 @@ public class FirstShiroRealm extends AuthorizingRealm {
         User user = userService.getUserById(Integer.valueOf(userId));
 
         if (user != null) {
-            //TODO ¼øÈ¨ÍêÉÆ
+            //TODO é‰´æƒå®Œå–„
             authorizationInfo.addRole("user");
             authorizationInfo.addStringPermission("all");
         }

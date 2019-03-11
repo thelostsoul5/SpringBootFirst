@@ -26,7 +26,7 @@ public class MultipleDataSourceTransaction implements Transaction {
 
     @Override
     public Connection getConnection() throws SQLException {
-        //这里取出Database只是为了缓存connection，不是最终的获取connection逻辑
+        //杩欓噷鍙栧嚭Database鍙槸涓轰簡缂撳瓨connection锛屼笉鏄渶缁堢殑鑾峰彇connection閫昏緫
         Database currentDatabase = DatabaseContextHolder.getDatabase();
         Connection theConn = null;
         if (connectionMap.containsKey(currentDatabase)) {
