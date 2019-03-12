@@ -61,8 +61,6 @@
 
         this.axios.get('/api/user', {params: ps})
           .then((resp) => {
-            console.log("response");
-            console.log(resp.data);
             const pagination = { ...this.pagination };
             pagination.total = resp.data.total;
             this.loading = false;

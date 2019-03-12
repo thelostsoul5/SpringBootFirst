@@ -103,10 +103,10 @@
           this.axios.post('/api/login', this.qs.stringify(values))
             .then((response) => {
               console.log(response);
-              this.$router.push("/user");
+              this.$router.push("/User");
             })
             .catch((error) => {
-              console.log(error);
+              console.log('error:', error);
             });
         });
       }
