@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Qs from 'qs'
-import axios from 'axios';
-import * as utils from './utils.js';
+import axios from 'axios'
+import utils from './utils.js';
 
 Vue.prototype.axios = axios.create();
 Vue.prototype.qs = Qs;
@@ -11,3 +11,6 @@ Vue.prototype.qs = Qs;
 Vue.prototype.axios.interceptors.response.use(function(response) {
   return response;
 }, utils.catchError);
+
+
+export default utils;

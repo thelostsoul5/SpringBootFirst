@@ -1,9 +1,6 @@
 package xyz.thelostsoul.base;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.ExcessiveAttemptsException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authc.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -28,6 +25,13 @@ public class WebExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<Object> unknownAccount(IncorrectCredentialsException e) {
         String error = "用户名/密码错误";
+        LOG.error(error, e);
+        return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Object> expiredCredentials(ExpiredCredentialsException e) {
+        String error = "凭证过期";
         LOG.error(error, e);
         return new ResponseEntity<>(error, HttpStatus.UNAUTHORIZED);
     }
