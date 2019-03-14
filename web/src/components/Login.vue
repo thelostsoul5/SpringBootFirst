@@ -85,8 +85,7 @@
     name: "Login",
     data() {
       return {
-        visible: false,
-        errorMessage: ""
+
       }
     },
     beforeCreate () {
@@ -100,7 +99,7 @@
             console.log('Received values of form: ', values);
           }
 
-          this.axios.post('/api/login', this.qs.stringify(values))
+          this.$api.login(values)
             .then((response) => {
               console.log(response);
               this.$router.push("/User");

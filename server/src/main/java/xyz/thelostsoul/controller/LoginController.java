@@ -13,7 +13,7 @@ import xyz.thelostsoul.bean.User;
 public class LoginController {
 
     @RequestMapping(value="/login", method = RequestMethod.POST)
-    public ResponseEntity<String> login(User user) throws Exception {
+    public ResponseEntity<String> login(@RequestBody User user) throws Exception {
         Subject subject = SecurityUtils.getSubject();
 
         ResponseEntity<String> response = new ResponseEntity<>("success", HttpStatus.OK);
