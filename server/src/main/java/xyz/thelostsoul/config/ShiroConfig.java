@@ -35,9 +35,7 @@ public class ShiroConfig {
         //配置记住我或认证通过可以访问的地址
         filterChainDefinitionMap.put("/api/login", "anon");
         filterChainDefinitionMap.put("/", "anon");
-        filterChainDefinitionMap.put("/css/**", "anon");
-        filterChainDefinitionMap.put("/js/**", "anon");
-        filterChainDefinitionMap.put("/img/**", "anon");
+        filterChainDefinitionMap.put("/assets/**", "anon");
         filterChainDefinitionMap.put("/druid/**", "anon");
 
         //logout是shiro提供的过滤器
