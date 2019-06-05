@@ -1,5 +1,6 @@
 package xyz.thelostsoul.utils;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -39,6 +40,10 @@ public class HttpClient {
         this.connection = (HttpURLConnection) this.url.openConnection();
     }
 
+    /**
+     * 头部设置
+     * @param headers
+     */
     public void setHeader(Map<String, String> headers) {
         if (headers == null) {
             return;
@@ -131,5 +136,19 @@ public class HttpClient {
         }
 
         return bytes;
+    }
+
+    public String getCookie() {
+        String cookieValue = this.connection.getHeaderField("Set-Cookie");
+        String sessionId = null;
+        LOG.error("cookie value:" + cookieValue);
+        if (StringUtils.isNotBlank(cookieValue)) {
+            sessionId = cookieValue.substring(0, cookieValue.indexOf(";"));
+        }
+        return sessionId;
+    }
+
+    public void setCookie(String sessionId) {
+        this.connection.setRequestProperty("Cookie", sessionId);
     }
 }
