@@ -13,6 +13,7 @@ buildscript {
         collectionsVersion = "4.2"
         langVersion = "3.7"
         shiroVersion = "1.4.0"
+        mokitoVersion = "2.0.2-beta"
     }
     repositories {
         maven { url "http://maven.aliyun.com/mvn/repository/" }
@@ -71,5 +72,5 @@ dependencies {
     implementation project(":web")//server模块依赖web模块
 
     testImplementation "org.springframework.boot:spring-boot-starter-test"
-    testImplementation "org.mockito:mockito-all:2.0.2-beta"
+    testImplementation "org.mockito:mockito-all:${mokitoVersion}"
 }
