@@ -81,6 +81,8 @@
 </template>
 
 <script>
+  import {message} from 'ant-design-vue';
+
   export default {
     name: "Login",
     data() {
@@ -96,16 +98,15 @@
         e.preventDefault();
         this.form.validateFields((err, values) => {
           if (!err) {
-            console.log('Received values of form: ', values);
+            message.error(err);
           }
 
           this.$api.login(values)
             .then((response) => {
-              console.log(response);
               this.$router.push("/User");
             })
             .catch((error) => {
-              console.log('error:', error);
+              message.error(error);
             });
         });
       }

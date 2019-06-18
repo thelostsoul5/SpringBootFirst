@@ -6,7 +6,6 @@ const http = axios.create();
 
 /* 错误处理 */
 http.interceptors.response.use(function(response) {
-  console.log('resp:', response);
   return response;
 }, catchError);
 

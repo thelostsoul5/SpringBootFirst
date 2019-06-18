@@ -38,7 +38,6 @@
     },
     methods: {
       handleTableChange (pagination, filters, sorter) {
-        console.log(pagination);
         const pager = { ...this.pagination };
         pager.current = pagination.current;
         this.pagination = pager;
@@ -56,7 +55,6 @@
           pageNum: 1,
           ...ps
         };
-        console.log('params:', ps);
         this.loading = true;
 
         this.$axios.get('/api/user', {params: ps})
@@ -68,7 +66,6 @@
             this.pagination = pagination;
           })
           .catch((error) => {
-            console.log(error);
             this.$router.push('/Login');
           });
       }
