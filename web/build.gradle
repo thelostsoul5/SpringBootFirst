@@ -15,6 +15,6 @@ jar.dependsOn npmBuild
 //调用npm run dev
 task npmDev(type: NpmTask, dependsOn: npmInstall) {
     group = 'node'
-    args = ['run', 'dev']
+    args = ['run', 'serve']
 }
 
