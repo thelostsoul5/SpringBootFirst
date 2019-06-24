@@ -1,7 +1,6 @@
-<h1 align="center">Welcome to SpringBootFirst 👋</h1>
-<p>
-  <img src="https://img.shields.io/badge/version-0.99-blue.svg?cacheSeconds=2592000" />
-</p>
+# Welcome to SpringBootFirst 👋
+
+![version](https://img.shields.io/badge/version-0.99-blue.svg?cacheSeconds=2592000)
 
 > Spring boot and Vue
 
