@@ -2,6 +2,7 @@ package xyz.thelostsoul.base;
 
 import com.alibaba.druid.sql.SQLUtils;
 import com.alibaba.druid.sql.ast.SQLStatement;
+import com.alibaba.druid.sql.visitor.SQLASTVisitorAdapter;
 import org.apache.ibatis.executor.statement.RoutingStatementHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
@@ -38,7 +39,7 @@ public class TableRouteInterceptor implements Interceptor {
 
         BoundSql boundSql = statementHandler.getBoundSql();
         String sql = boundSql.getSql();
-        LOG.info("原SQL：" + sql);
+        LOG.info("原SQL：{}", sql);
 
         MetaObject metaStatementHandler = SystemMetaObject.forObject(statementHandler);
         MappedStatement mappedStatement = (MappedStatement) metaStatementHandler.getValue("delegate.mappedStatement");
@@ -75,12 +76,12 @@ public class TableRouteInterceptor implements Interceptor {
             }
 
             List<SQLStatement> statementList = SQLUtils.parseStatements(sql, dbType);
-            RouteTableExprVisitor visitor = new RouteTableExprVisitor(tableIndexMap);
+            SQLASTVisitorAdapter visitor = VisitorFactory.createASTVisitor(dbType, tableIndexMap);
             for (SQLStatement sqlStatement : statementList) {
                 sqlStatement.accept(visitor);
             }
             sql = SQLUtils.toSQLString(statementList, dbType);
-            LOG.info("执行分表规则后的SQL：" + sql);
+            LOG.info("执行分表规则后的SQL：{}", sql);
             metaStatementHandler.setValue("delegate.boundSql.sql", sql);
         }
 
