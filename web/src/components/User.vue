@@ -57,7 +57,7 @@
         };
         this.loading = true;
 
-        this.$axios.get('/api/user', {params: ps})
+        this.$api.user({params: ps})
           .then((resp) => {
             const pagination = { ...this.pagination };
             pagination.total = resp.data.total;

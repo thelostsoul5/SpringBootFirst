@@ -12,10 +12,10 @@ import java.util.List;
 /**
  * Created by jamie on 17-2-13.
  */
+@DataSourceSetter(Database.second)
 @TableTag(tableName = "user", separator = "_", shardByField = "id", fieldParser = Evenly10RouteFieldParser.class)
 @Mapper
 public interface UserMapper {
-    @DataSourceSetter(Database.second)
     @Select("select * from user where id=#{id}")
     User selectByPrimaryKey(@Param("id") int id);
 

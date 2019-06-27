@@ -97,8 +97,9 @@
       handleSubmit (e) {
         e.preventDefault();
         this.form.validateFields((err, values) => {
-          if (!err) {
+          if (err) {
             message.error(err);
+            return;
           }
 
           this.$api.login(values)
@@ -106,7 +107,7 @@
               this.$router.push("/User");
             })
             .catch((error) => {
-              message.error(error);
+              console.error("登录报错：" + error);
             });
         });
       }

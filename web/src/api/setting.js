@@ -1,6 +1,7 @@
 import Qs from 'qs'
 import axios from 'axios'
 import {message} from 'ant-design-vue';
+import router from '@/router';
 
 const http = axios.create();
 

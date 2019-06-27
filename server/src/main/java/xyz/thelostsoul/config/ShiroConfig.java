@@ -31,6 +31,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("/");
         shiroFilterFactoryBean.setSuccessUrl("/");
 
+        //需要注意的是filterChain基于短路机制，即最先匹配原则
         //配置不登录可以访问的资源，anon 表示资源都可以匿名访问
         //配置记住我或认证通过可以访问的地址
         filterChainDefinitionMap.put("/api/login", "anon");
