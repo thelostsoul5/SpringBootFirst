@@ -14,7 +14,7 @@ public class UserSqlBuilder {
     public String buildGetUserByIds(@Param("idList") final List<Integer> idList){
         return new SQL(){{
             SELECT("id","name");
-            FROM("all_user");
+            FROM("user");
             if (idList!=null){
                 String ids = idList.stream().map(Object::toString).collect(Collectors.joining(","));
                 WHERE("id in ("+ids+")");
