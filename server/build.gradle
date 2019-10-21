@@ -14,6 +14,7 @@ buildscript {
         langVersion = "3.7"
         shiroVersion = "1.4.0"
         mokitoVersion = "2.0.2-beta"
+        nettyVersion = "4.1.42.Final"
     }
     repositories {
         maven { url "http://maven.aliyun.com/mvn/repository/" }
@@ -51,8 +52,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-freemarker"
     implementation "org.springframework.boot:spring-boot-devtools"
-    implementation "org.springframework.boot:spring-boot-starter-data-redis"
-    implementation "org.springframework.session:spring-session-data-redis"
+//    implementation "org.springframework.boot:spring-boot-starter-data-redis"
+//    implementation "org.springframework.session:spring-session-data-redis"
 
     implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisVersion}"
     implementation "com.github.pagehelper:pagehelper-spring-boot-starter:${pagehelperVersion}"
@@ -68,6 +69,7 @@ dependencies {
     implementation "com.google.code.gson:gson:${gsonVersion}"
     implementation "org.apache.commons:commons-collections4:${collectionsVersion}"
     implementation "org.apache.commons:commons-lang3:${langVersion}"
+    implementation "io.netty:netty-all:${nettyVersion}"
 
     implementation project(":web")//server模块依赖web模块
 
