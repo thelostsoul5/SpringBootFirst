@@ -29,11 +29,11 @@ public class AsyncHttpClient {
 
     private Bootstrap boot;
 
-    private static ChannelPoolMap<String, FixedChannelPool> poolMap;
+    private static ChannelPoolMap<URL, FixedChannelPool> poolMap;
 
     private boolean havingBoot = false;
 
-    public AsyncHttpClient(String url, Map<String, String> param) throws Exception {
+    public AsyncHttpClient(String url, Map<String, String> param, DefaultResponseHandler responseHandler) throws Exception {
         String paramString = null;
         if (param != null && param.size() > 0) {
             StringBuilder finalParamString = new StringBuilder();
@@ -48,7 +48,9 @@ public class AsyncHttpClient {
 
         this.worker = new NioEventLoopGroup();
 
-        this.boot = new Bootstrap().group(worker);
+        this.boot = new Bootstrap().group(worker).channel(NioSocketChannel.class);
+
+        initPoolMap(this.boot, responseHandler);
     }
 
     public void setHeader(Map<String, String> headers) {
@@ -59,26 +61,9 @@ public class AsyncHttpClient {
         headers.forEach((k, v) -> this.httpHeaders.set(k, v));
     }
 
-    public void initBoot(String host, int port) throws Exception {
-        if (!havingBoot) {
-            boot.channel(NioSocketChannel.class)
-                    .remoteAddress(host, port)
-                    .option(ChannelOption.SO_KEEPALIVE, false)
-                    .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000);
-            havingBoot = true;
-        }
-    }
+    public void get() throws Exception {
 
-    public void asyncGet(DefaultResponseHandler responseHandler) throws Exception {
-        String host = url.getHost();
-        int port = url.getPort();
-        
-        if (null == poolMap) {
-            initBoot(host, port);
-            initPoolMap(boot, responseHandler);
-        }
-
-        final FixedChannelPool pool = poolMap.get(host + ":" + port + "|" + responseHandler.getClass());
+        final FixedChannelPool pool = poolMap.get(this.url);
         Future<Channel> future = pool.acquire();
         future.addListener(f -> {
             Channel channel = (Channel) f.getNow();
@@ -91,14 +76,38 @@ public class AsyncHttpClient {
         });
     }
 
+    public void post(byte[] body) throws Exception {
+
+        final FixedChannelPool pool = poolMap.get(this.url);
+        Future<Channel> future = pool.acquire();
+        future.addListener(f -> {
+            Channel channel = (Channel) f.getNow();
+            HttpRequest request = new DefaultHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.POST, url.toString());
+            request.headers().add(httpHeaders);
+
+            ChannelFuture lastWriteFuture = channel.writeAndFlush(request);
+            if (null != body) {
+                //请求体写入
+                HttpContent content = new DefaultLastHttpContent();
+                content.content().writeBytes(body);
+                lastWriteFuture = channel.writeAndFlush(content);
+            }
+            lastWriteFuture.sync();
+            pool.release(channel);
+        });
+    }
+
     public Future<?> shutdown() {
         return worker.shutdownGracefully();
     }
 
     private void initPoolMap(Bootstrap boot, DefaultResponseHandler responseHandler) throws Exception {
-        poolMap = new AbstractChannelPoolMap<String, FixedChannelPool>() {
+        if (null != poolMap) {
+            return;
+        }
+        poolMap = new AbstractChannelPoolMap<URL, FixedChannelPool>() {
             @Override
-            protected FixedChannelPool newPool(String s) {
+            protected FixedChannelPool newPool(URL url) {
                 ChannelPoolHandler handler = new ChannelPoolHandler() {
                     /**
                      * 使用完channel需要释放才能放入连接池
@@ -129,7 +138,7 @@ public class AsyncHttpClient {
                     }
                 };
 
-                return new FixedChannelPool(boot, handler, 50); //单个host连接池大小
+                return new FixedChannelPool(boot.remoteAddress(url.getHost(), url.getPort()), handler, 50);
             }
         };
     }
@@ -173,7 +182,7 @@ public class AsyncHttpClient {
 
         }
     }
-    
+
     static class Wait4ResponseHandler extends DefaultResponseHandler {
         private CountDownLatch count = new CountDownLatch(1);
         private int contentLength = 0;
