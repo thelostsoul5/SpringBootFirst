@@ -27,13 +27,9 @@ public class AsyncHttpClient {
 
     private EventLoopGroup worker;
 
-    private Bootstrap boot;
-
     private static ChannelPoolMap<URL, FixedChannelPool> poolMap;
 
-    private boolean havingBoot = false;
-
-    public AsyncHttpClient(String url, Map<String, String> param, DefaultResponseHandler responseHandler) throws Exception {
+    public AsyncHttpClient(String url, Map<String, String> param, AbstractResponseHandler responseHandler) throws Exception {
         String paramString = null;
         if (param != null && param.size() > 0) {
             StringBuilder finalParamString = new StringBuilder();
@@ -48,9 +44,9 @@ public class AsyncHttpClient {
 
         this.worker = new NioEventLoopGroup();
 
-        this.boot = new Bootstrap().group(worker).channel(NioSocketChannel.class);
+        Bootstrap boot = new Bootstrap().group(worker).channel(NioSocketChannel.class);
 
-        initPoolMap(this.boot, responseHandler);
+        initPoolMap(boot, responseHandler);
     }
 
     public void setHeader(Map<String, String> headers) {
@@ -101,7 +97,7 @@ public class AsyncHttpClient {
         return worker.shutdownGracefully();
     }
 
-    private void initPoolMap(Bootstrap boot, DefaultResponseHandler responseHandler) throws Exception {
+    private void initPoolMap(Bootstrap boot, AbstractResponseHandler responseHandler) {
         if (null != poolMap) {
             return;
         }
@@ -113,7 +109,7 @@ public class AsyncHttpClient {
                      * 使用完channel需要释放才能放入连接池
                      */
                     @Override
-                    public void channelReleased(Channel ch) throws Exception {
+                    public void channelReleased(Channel ch) {
                         // 刷新管道里的数据
                         // ch.writeAndFlush(Unpooled.EMPTY_BUFFER); // flush掉所有写回的数据
                     }
@@ -122,7 +118,7 @@ public class AsyncHttpClient {
                      * 当链接创建的时候添加channelHandler，只有当channel不足时会创建，但不会超过限制的最大channel数
                      */
                     @Override
-                    public void channelCreated(Channel ch) throws Exception {
+                    public void channelCreated(Channel ch) {
                         // 客户端接收到的是httpResponse响应，所以要使用HttpResponseDecoder进行解码
                         ch.pipeline().addLast(new HttpResponseDecoder());
                         // 客户端发送的是httpRequest，所以要使用HttpRequestEncoder进行编码
@@ -134,7 +130,7 @@ public class AsyncHttpClient {
                      *  获取连接池中的channel
                      */
                     @Override
-                    public void channelAcquired(Channel ch) throws Exception {
+                    public void channelAcquired(Channel ch) {
                     }
                 };
 
@@ -144,13 +140,13 @@ public class AsyncHttpClient {
     }
 
     @ChannelHandler.Sharable
-    abstract static class DefaultResponseHandler extends ChannelInboundHandlerAdapter {
-        public DefaultResponseHandler() {}
+    abstract static class AbstractResponseHandler extends ChannelInboundHandlerAdapter {
+        public AbstractResponseHandler() {}
 
         public abstract void init();
     }
 
-    static class OutStreamResponseHandler extends DefaultResponseHandler {
+    static class OutStreamResponseHandler extends AbstractResponseHandler {
 
         private OutputStream os;
 
@@ -183,7 +179,7 @@ public class AsyncHttpClient {
         }
     }
 
-    static class Wait4ResponseHandler extends DefaultResponseHandler {
+    static class Wait4ResponseHandler extends AbstractResponseHandler {
         private CountDownLatch count = new CountDownLatch(1);
         private int contentLength = 0;
         private ByteBuf response = Unpooled.buffer();
