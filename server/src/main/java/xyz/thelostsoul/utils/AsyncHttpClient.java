@@ -146,7 +146,7 @@ public class AsyncHttpClient {
         public abstract void init();
     }
 
-    static class OutStreamResponseHandler extends AbstractResponseHandler {
+    public static class OutStreamResponseHandler extends AbstractResponseHandler {
 
         private OutputStream os;
 
@@ -179,7 +179,7 @@ public class AsyncHttpClient {
         }
     }
 
-    static class Wait4ResponseHandler extends AbstractResponseHandler {
+    public static class Wait4ResponseHandler extends AbstractResponseHandler {
         private CountDownLatch count = new CountDownLatch(1);
         private int contentLength = 0;
         private ByteBuf response = Unpooled.buffer();
