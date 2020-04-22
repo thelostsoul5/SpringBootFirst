@@ -17,7 +17,7 @@ buildscript {
         nettyVersion = "4.1.42.Final"
     }
     repositories {
-        maven { url "http://maven.aliyun.com/mvn/repository/" }
+        maven { url "https://maven.aliyun.com/repository/spring-plugin" }
         mavenCentral()
     }
     dependencies {
@@ -38,7 +38,8 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-    maven { url "http://maven.aliyun.com/mvn/repository/" }
+    maven { url "https://maven.aliyun.com/repository/central" }
+    maven { url "https://maven.aliyun.com/repository/spring"}
     mavenCentral()
     maven { url "https://repo.spring.io/snapshot" }
     maven { url "https://repo.spring.io/milestone" }
