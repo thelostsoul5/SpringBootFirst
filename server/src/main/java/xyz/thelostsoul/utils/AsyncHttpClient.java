@@ -29,7 +29,13 @@ public class AsyncHttpClient {
 
     private static ChannelPoolMap<URL, FixedChannelPool> poolMap;
 
+    private static int maxConnections = 50;
+
     public AsyncHttpClient(String url, Map<String, String> param, AbstractResponseHandler responseHandler) throws Exception {
+        AsyncHttpClient(url, param, responseHandler, 0);
+    }
+
+    public AsyncHttpClient(String url, Map<String, String> param, AbstractResponseHandler responseHandler, int maxConnections) throws Exception {
         String paramString = null;
         if (param != null && param.size() > 0) {
             StringBuilder finalParamString = new StringBuilder();
@@ -47,6 +53,10 @@ public class AsyncHttpClient {
         Bootstrap boot = new Bootstrap().group(worker).channel(NioSocketChannel.class);
 
         initPoolMap(boot, responseHandler);
+
+        if (0 < maxConnections) {
+            this.maxConnections = maxConnections;
+        }
     }
 
     public void setHeader(Map<String, String> headers) {
