@@ -129,11 +129,15 @@ public class AsyncHttpClient {
                      */
                     @Override
                     public void channelCreated(Channel ch) {
+                        ChannelPipeline pipeline = ch.pipeline();
                         // 客户端接收到的是httpResponse响应，所以要使用HttpResponseDecoder进行解码
-                        ch.pipeline().addLast(new HttpResponseDecoder());
+                        pipeline.addLast(new HttpResponseDecoder());
                         // 客户端发送的是httpRequest，所以要使用HttpRequestEncoder进行编码
-                        ch.pipeline().addLast(new HttpRequestEncoder());
-                        ch.pipeline().addLast(responseHandler);
+                        pipeline.addLast(new HttpRequestEncoder());
+                        pipeline.addLast("codec", new HttpClientCodec());
+                        //消息聚合，最大512kb
+                        pipeline.addLast("aggregator", new HttpObjectAggregator(512*1024));
+                        pipeline.addLast(responseHandler);
                     }
 
                     /**
