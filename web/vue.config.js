@@ -1,5 +1,5 @@
 const path = require('path')
-const assetsRoot = path.resolve(__dirname, '../build/resources/main/static')// <-----1.add
+const assetsRoot = path.resolve(__dirname, 'build/resources/main/static')// <-----1.add
 
 module.exports = {
   devServer: {
