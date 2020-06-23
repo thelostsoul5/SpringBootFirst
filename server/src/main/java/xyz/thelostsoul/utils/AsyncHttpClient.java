@@ -134,7 +134,6 @@ public class AsyncHttpClient {
                         pipeline.addLast(new HttpResponseDecoder());
                         // 客户端发送的是httpRequest，所以要使用HttpRequestEncoder进行编码
                         pipeline.addLast(new HttpRequestEncoder());
-                        pipeline.addLast("codec", new HttpClientCodec());
                         //消息聚合，最大512kb
                         pipeline.addLast("aggregator", new HttpObjectAggregator(512*1024));
                         pipeline.addLast(responseHandler);
