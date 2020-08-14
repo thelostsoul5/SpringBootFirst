@@ -16,9 +16,9 @@ public class MyBatisGeneratorRun {
     public static void main(String[] args) throws IOException, XMLParserException, SQLException, InterruptedException, InvalidConfigurationException {
         List<String> warnings = new ArrayList<String>();
         boolean overwrite = true;
-        //åŠ è½½generatorConfigæ–‡ä»¶
+        //¼ÓÔØgeneratorConfigÎÄ¼ş
         File configFile = new File(MyBatisGeneratorRun.class.getClassLoader().getResource("generatorConfig.xml").getPath());
-        //åŠ è½½æ•°æ®åº“ä¿¡æ¯ï¼Œä¾‹å¦‚driverClassNameï¼Œusername,password,urlç­‰
+        //¼ÓÔØÊı¾İ¿âĞÅÏ¢£¬ÀıÈçdriverClassName£¬username,password,urlµÈ
         ConfigurationParser cp = new ConfigurationParser(warnings);
         Configuration config = cp.parseConfiguration(configFile);
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
@@ -29,6 +29,6 @@ public class MyBatisGeneratorRun {
                 System.out.println(warn);
             }
         }
-        System.out.println("ç”ŸæˆæˆåŠŸï¼");
+        System.out.println("Éú³É³É¹¦£¡");
     }
 }
