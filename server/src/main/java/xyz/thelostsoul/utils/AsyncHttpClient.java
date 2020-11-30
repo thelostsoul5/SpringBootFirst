@@ -32,7 +32,7 @@ public class AsyncHttpClient {
     private static int maxConnections = 50;
 
     public AsyncHttpClient(String url, Map<String, String> param, AbstractResponseHandler responseHandler) throws Exception {
-        AsyncHttpClient(url, param, responseHandler, 0);
+        this(url, param, responseHandler, 0);
     }
 
     public AsyncHttpClient(String url, Map<String, String> param, AbstractResponseHandler responseHandler, int maxConnections) throws Exception {

@@ -15,7 +15,7 @@ public class MybatisGeneratorComment implements CommentGenerator {
     @Override
     public void addFieldComment(Field field, IntrospectedTable introspectedTable,
                                 IntrospectedColumn introspectedColumn) {
-        //åˆ¤æ–­æ•°æ®åº“ä¸­è¯¥å­—æ®µæ³¨é‡Šæ˜¯å¦ä¸ºç©º
+        //ÅĞ¶ÏÊı¾İ¿âÖĞ¸Ã×Ö¶Î×¢ÊÍÊÇ·ñÎª¿Õ
         if(introspectedColumn.getRemarks()==null||introspectedColumn.getRemarks().equals("")) {
             return;
         }
@@ -43,7 +43,7 @@ public class MybatisGeneratorComment implements CommentGenerator {
         if(introspectedColumn.getRemarks()==null||introspectedColumn.getRemarks()=="") {
             return;
         }
-        method.addJavaDocLine("/**è·å–"+introspectedColumn.getRemarks()+"*/");
+        method.addJavaDocLine("/**»ñÈ¡"+introspectedColumn.getRemarks()+"*/");
     }
 
     @Override
@@ -52,7 +52,7 @@ public class MybatisGeneratorComment implements CommentGenerator {
         if(introspectedColumn.getRemarks()==null||introspectedColumn.getRemarks().equals("")) {
             return;
         }
-        method.addJavaDocLine("/**è®¾ç½®"+introspectedColumn.getRemarks()+"*/");
+        method.addJavaDocLine("/**ÉèÖÃ"+introspectedColumn.getRemarks()+"*/");
     }
 
     @Override
