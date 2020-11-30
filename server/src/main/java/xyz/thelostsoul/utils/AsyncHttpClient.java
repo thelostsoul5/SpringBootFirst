@@ -147,7 +147,12 @@ public class AsyncHttpClient {
                     }
                 };
 
-                return new FixedChannelPool(boot.remoteAddress(url.getHost(), url.getPort()), handler, 50);
+                int port = url.getPort();
+                if (-1 == port) {
+                    port = url.getDefaultPort();
+                }
+
+                return new FixedChannelPool(boot.remoteAddress(url.getHost(), port), handler, MAX_CONNECTIONS);
             }
         };
     }
